@@ -3,3 +3,7 @@ backend/node_modules
 backend/client/*
 backend/.gitignore
 backend/.env
+frontend/.env
+frontend/.env.*
+.env
+.env.*
