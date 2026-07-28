@@ -29,7 +29,7 @@ const SignUp = (props) => {
 		//RegEx
 		const uname = RegExp(/^[a-zA-Z0-9._]+$/)
 		const reMail = RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)
-		const rePass = RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*[!{}[\]@#$%\^&*)(+=._-]).{5,}/)
+		const rePass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/
 		// username
 		if(user.username === '') {
 			error.username = 'No puede estar vacío'
@@ -64,11 +64,11 @@ const SignUp = (props) => {
 			error.ok = false
 		}
 		else if(user.pass.length < 5) {
-			error.pass = 'Debe tener cinco letras mínimo'
+			error.pass = 'Debe tener cinco caracteres mínimo'
 			error.ok = false
 		}
 		else if(!rePass.test(user.pass)) {
-			error.pass = 'Debe tener al menos una mayúscula, una minúscula y un numero'
+			error.pass = 'Debe tener al menos una mayúscula, una minúscula y un número'
 			error.ok = false
 		}
 		else error.pass = ''

@@ -5,7 +5,7 @@ const validator = {
 		const schema = Joi.object({
 			username: Joi.string().trim().min(3).max(20).required(),
 			mail: Joi.string().trim().email().required(),
-			pass: Joi.string().trim().pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*[!{}[\]@#$%\^&*)(+=._-]).{5,}/, 'password').required()
+			pass: Joi.string().trim().pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/, 'password').required()
 		})
 		const validation = schema.validate(req.body, { abortEarly: false })
 		
