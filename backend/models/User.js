@@ -1,4 +1,4 @@
-mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = new mongoose.Schema({
@@ -41,6 +41,6 @@ const userSchema = new mongoose.Schema({
 	}
 })
 
-const User = mongoose.model('user', userSchema);
 userSchema.plugin(uniqueValidator,{ message: '{PATH} alredy used'});
+const User = mongoose.model('user', userSchema);
 module.exports = User;

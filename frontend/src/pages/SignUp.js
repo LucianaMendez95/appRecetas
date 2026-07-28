@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import '../styles/signup.css';
 import {connect} from 'react-redux'
 import userActions from '../redux/actions/userActions';
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin } from '@react-oauth/google';
 import { toast } from 'react-toastify';
 import { NavLink } from 'react-router-dom';
+import { getImage } from '../utils/images';
+import { decodeGoogleCredential } from '../utils/googleAuth';
 
 const SignUp = (props) => {
 	const [user, setUser] = useState({
@@ -105,22 +107,31 @@ const SignUp = (props) => {
 		}
 	}
 	
-	const responseGoogle = async response => {
-		let userG = {
-            firstName: response.profileObj.givenName,
-            lastName: response.profileObj.familyName,
-            pass: '1Qa'+response.profileObj.googleId,
-            username:response.profileObj.email.substr(0,response.profileObj.email.indexOf('@')),
-            mail:response.profileObj.email,
-            urlPic:response.profileObj.imageUrl
+	const responseGoogle = async credentialResponse => {
+		if (!credentialResponse?.credential) {
+			toast.error('No se pudo crear la cuenta con Google')
+			return
 		}
-        await props.createUser(userG, setSend)
-    }
+		const profile = decodeGoogleCredential(credentialResponse.credential)
+		const userG = {
+			firstName: profile.given_name,
+			lastName: profile.family_name,
+			pass: '1Qa' + profile.sub,
+			username: profile.email.substr(0, profile.email.indexOf('@')),
+			mail: profile.email,
+			urlPic: profile.picture
+		}
+		await props.createUser(userG, setSend)
+	}
+
+	const failureGoogle = () => {
+		toast.error('Registro con Google no disponible. Completá el formulario.')
+	}
 
 	return (<>
 		<div className="sign">
 		<div className="form">
-			<div className="logo" style={{backgroundImage: `url(${require('../images/icono.png')})`}}/>
+			<div className="logo" style={{backgroundImage: `url(${getImage('icono.png')})`}}/>
 			<form className="sign">
 				<div className="inputBox">
 					<label htmlFor="username"><i className="fas fa-id-card"></i></label>
@@ -140,11 +151,9 @@ const SignUp = (props) => {
 					<button onClick={submitHandler} disabled={send.status ? true : false}>{!send.status ? 'Crear cuenta' : <i className="fas fa-spinner fa-pulse"></i>}</button>
 			</form>
 			<GoogleLogin
-				clientId="966528695098-gero4ime5uu402rk59matmpn0g29j0nk.apps.googleusercontent.com"
-				buttonText="Crear cuenta con Google"
 				onSuccess={responseGoogle}
-				onFailure={responseGoogle}
-				cookiePolicy={'single_host_origin'}
+				onError={failureGoogle}
+				text="signup_with"
 			/>
 			<p><NavLink to="/">Volver al Home</NavLink></p>
 			<p><NavLink to="logIn">¡Tengo una cuenta!</NavLink></p>

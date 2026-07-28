@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import {connect} from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import userActions from '../redux/actions/userActions';
 import { RUTA_API } from '../constants';
+import { getImage } from '../utils/images';
 
 const Dropdown1 = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen(prevState => !prevState);
-  const fotousuario = require("../images/usuario.png")
+  const fotousuario = getImage("usuario.png")
 
   return ( 
     <Dropdown isOpen={dropdownOpen} toggle={toggle}>

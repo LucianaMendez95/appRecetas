@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import {connect} from 'react-redux'
 import userActions from '../redux/actions/userActions';
 import '../styles/login.css';
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin } from '@react-oauth/google';
 import { toast } from 'react-toastify';
 import { NavLink } from 'react-router-dom';
+import { getImage } from '../utils/images';
+import { decodeGoogleCredential } from '../utils/googleAuth';
 
 
 const Login = (props) => {
@@ -42,18 +44,27 @@ const Login = (props) => {
 		}
 	}
 
-	const responseGoogle = async response => {
-		let userG = {
-            pass: '1Qa'+response.profileObj.googleId,
-            mail:response.profileObj.email
+	const responseGoogle = async credentialResponse => {
+		if (!credentialResponse?.credential) {
+			toast.error('No se pudo iniciar sesión con Google')
+			return
+		}
+		const profile = decodeGoogleCredential(credentialResponse.credential)
+		const userG = {
+			pass: '1Qa' + profile.sub,
+			mail: profile.email
 		}
 		await props.loginUser(userG)
-    }
+	}
+
+	const failureGoogle = () => {
+		toast.error('Login con Google no disponible. Usá email y contraseña.')
+	}
 
 	return (<>
 		<div className="sign">
 				<div className="form">
-					<div className="logo" style={{backgroundImage: `url(${require('../images/icono.png')})`}}/>
+					<div className="logo" style={{backgroundImage: `url(${getImage('icono.png')})`}}/>
 					<form className="sign">
 						<span className="title">INGRESAR</span>
 						<div className="inputBox">
@@ -68,11 +79,9 @@ const Login = (props) => {
 					</form>
 					<div className="googleButton">
 					<GoogleLogin
-					clientId="966528695098-gero4ime5uu402rk59matmpn0g29j0nk.apps.googleusercontent.com"
-					buttonText="Login con Google"
 					onSuccess={responseGoogle}
-					onFailure={responseGoogle}
-					cookiePolicy={'single_host_origin'}
+					onError={failureGoogle}
+					text="signin_with"
 					/>
 					</div>
 					<p><NavLink to="/">Volver al Home</NavLink></p>

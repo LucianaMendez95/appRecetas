@@ -12,7 +12,7 @@ const userController = {
 		newUser
 			.save()
 			.then(user => {
-				const token = jwt.sign({ ...user }, process.env.SECRET_KEY, {})
+				const token = jwt.sign({ _doc: user.toObject() }, process.env.SECRET_KEY, {})
 				if (!token)
 					return res.json({
 						success: false,
@@ -35,8 +35,8 @@ const userController = {
 		if (!userExists) return res.json({ success: false, error: message })
 		const passwordMatches = bcrypt.compareSync(pass, userExists.pass)
 		if (!passwordMatches) return res.json({ success: false, error: message })
-		const token = jwt.sign({ ...userExists }, process.env.SECRET_KEY, {})
-		if (!token) return res.json({ success: false, error })
+		const token = jwt.sign({ _doc: userExists.toObject() }, process.env.SECRET_KEY, {})
+		if (!token) return res.json({ success: false, error: message })
 
 		res.json({
 			success: true,

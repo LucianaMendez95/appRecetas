@@ -5,6 +5,7 @@ import homeBackgroundOne from "../images/homeBackgroundOne.png"
 import homeBackgroundTwo from "../images/homeBackgroundTwo.png"
 import recipeActions from '../redux/actions/recipeActions';
 import { connect } from 'react-redux';
+import { getImage } from '../utils/images';
 
 const CreateRecipe = (props) => {
 	const [recipe, setRecipe] = useState({
@@ -110,20 +111,20 @@ const CreateRecipe = (props) => {
 			<div id="space" style={{ height:"20vh", marginBottom:"9vh"}}></div>
 			<div className="createRecipe">
 				<span className="title">Crear Receta</span>
-				<form class="createRecipe">
-					<div class="inputBox">
-						<label for="">Imagen</label>
+				<form className="createRecipe">
+					<div className="inputBox">
+						<label htmlFor="">Imagen</label>
 						<input type="file" name="urlPic" onChange={inputHandler} />
 					</div>
-					<div class="inputBox">
-						<label for="">Titulo</label>
+					<div className="inputBox">
+						<label htmlFor="">Titulo</label>
 						<input type="text" name="title" onChange={inputHandler} />
 					</div>
-					<div class="inputBox">
-						<label for="">Descripcion</label>
+					<div className="inputBox">
+						<label htmlFor="">Descripcion</label>
 						<input type="text" name="description" onChange={inputHandler} />
 					</div>
-					<div class="inputBox">
+					<div className="inputBox">
 						<label>Dieta</label>
 						<div>
 							<select name="diet" onChange={inputHandler}>
@@ -133,11 +134,11 @@ const CreateRecipe = (props) => {
 							</select>
 						</div>
 					</div>
-					<div class="inputBox">
+					<div className="inputBox">
 						<label>Duracion</label>
 						<input type="number" className='time' placeholder="minutos" name='duration' onChange={inputHandler} />
 					</div>
-					<div class="inputBox">
+					<div className="inputBox">
 						<label>Dificultad</label>
 						<div>
 							<select name="difficulty" onChange={inputHandler}>
@@ -147,7 +148,7 @@ const CreateRecipe = (props) => {
 							</select>
 						</div>
 					</div>
-					<div class="inputBox">
+					<div className="inputBox">
 						<label>Ingredientes</label>
 						<div className="ingredient">
 							{ing.map((ingrediente, index) => {
@@ -163,9 +164,9 @@ const CreateRecipe = (props) => {
 							})}
 						</div>
 					</div>
-					<div class="inputBox">
+					<div className="inputBox">
 						<label>Receta</label>
-						<div class="recipe">
+						<div className="recipe">
 						{steps.map((step, index) => {
 								return <div  className="stepsToFollow" style={{display: 'flex'}}>
 								<h4>{index + 1}</h4>
@@ -174,12 +175,12 @@ const CreateRecipe = (props) => {
 							})}
 						</div>
 					</div>
-			<div class="inputBox">
-				<label for="">Contenido importante (alergias)</label>
-				<div class="allergies">
+			<div className="inputBox">
+				<label htmlFor="">Contenido importante (alergias)</label>
+				<div className="allergies">
 					{constantes.allergies.map((item,index) => {
 						return <>
-							<label for={item}><img src={recipe.allergies.includes(item) ? require(`../images/${item}ON.png`) : require(`../images/${item}.png`)} id="allergie" /></label>
+							<label htmlFor={item}><img src={recipe.allergies.includes(item) ? getImage(`${item}ON.png`) : getImage(`${item}.png`)} id="allergie" /></label>
 							<input type="checkbox" value={item} id={item} onChange={allergyHandler} />
 						</>
 					})}

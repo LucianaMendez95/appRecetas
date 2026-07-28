@@ -1,15 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {NavLink} from "react-router-dom"
 import {connect} from 'react-redux'
 import '../styles/HeaderFooter.css'
 import Dropdown from './Dropdown';
 import { Link } from 'react-router-dom';
+import { getImage } from '../utils/images';
 
 
 const Header = (props) => {
-    const fotologo = require("../images/logo.png")
-    const fotoBoton = require("../images/menuHamburguesa.png")
-    const cerrar = require('../images/cerrar.png')
+    const fotologo = getImage("logo.png")
+    const fotoBoton = getImage("menuHamburguesa.png")
+    const cerrar = getImage('cerrar.png')
     const [menuShow, setmenuShow] = useState({
         show: false
     })

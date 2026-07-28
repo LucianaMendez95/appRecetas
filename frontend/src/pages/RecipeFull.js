@@ -11,6 +11,7 @@ import homeBackgroundThree from "../images/backgroundThree.png"
 import { RUTA_API } from "../constants"
 import "../styles/comments.css"
 import { Link } from 'react-router-dom';
+import { getImage } from '../utils/images';
 
 
 const RecipeFull = props => {
@@ -38,8 +39,8 @@ const RecipeFull = props => {
 		gR()
 		setUpdate(false)
 	}, [update])
-	const fotousuario = require("../images/usuario.png")
-	const imageFood = require("../images/VEGETARIANA.jpg")
+	const fotousuario = getImage("usuario.png")
+	const imageFood = getImage("VEGETARIANA.jpg")
 	const time = (minutes) => {
 		return minutes > 59 ? `${(minutes/60).toFixed(0)}:${minutes%60 !== 0 ? minutes%60 < 10 ? '0'+minutes%60 : minutes%60 : "00"}` : minutes;
 	}
@@ -120,18 +121,18 @@ const RecipeFull = props => {
 	<div id="everything">
 		<div id="LeftSide">
 		    <div id="difficulty" key={props.recipe.difficulty}>
-					<img src={require(`../images/${props.recipe.difficulty}.png`)} id="difficultyImg" />
+					<img src={getImage(`${props.recipe.difficulty}.png`)} id="difficultyImg" />
 			</div>
 			<div  id="imageFood" style={{backgroundImage: `url(${RUTA_API +'/'+ props.recipe._id+'.jpg'})`}} >
-			<div class="data">
-				<div class="time">
-						<span><i class="far fa-clock"> </i> <span class="number">{time(props.recipe.duration)}</span></span>
+			<div className="data">
+				<div className="time">
+						<span><i className="far fa-clock"> </i> <span className="number">{time(props.recipe.duration)}</span></span>
 						<span style={{fontWeight: "bold", paddingLeft:"1vw"}}>{props.recipe.duration < 59 ? 'minutos' : props.recipe.duration == 60 ? 'hora' : 'horas'}</span>
 					</div>
-					<div class="likes">
+					<div className="likes">
                         <span>
-                            <i class={(props.likes.indexOf(props.recipe._id) !== -1)? "fas fa-heart":"far fa-heart"}  onClick={autLikes} disable={true} ></i>
-                            <span class="number">{props.recipe.likes}</span>
+                            <i className={(props.likes.indexOf(props.recipe._id) !== -1)? "fas fa-heart":"far fa-heart"}  onClick={autLikes} disable={true} ></i>
+                            <span className="number">{props.recipe.likes}</span>
                         </span>
 						<span style={{fontWeight: "bold", paddingLeft:"1vw"}}>likes</span>
 					</div>
@@ -152,7 +153,7 @@ const RecipeFull = props => {
 			<div id="icons">
 				{props.recipe.importantContain.map(allAlergies => {
 					return <div id="allAlergies" key={allAlergies}>
-							<img src={require(`../images/${allAlergies}.png`)} id="allergie" />
+							<img src={getImage(`${allAlergies}.png`)} id="allergie" />
 						</div>
 				})}				
 			</div>
@@ -194,25 +195,25 @@ const RecipeFull = props => {
 			<p>{props.recipe.description}</p>
 		</div>
 		<div  id="imageFood" style={{backgroundImage: `url(${RUTA_API +'/'+ props.recipe._id+'.jpg'})`}}> 
-		    <div class="data">
-				<div class="time">
-					<span><i class="far fa-clock"> </i> <span class="number">{time(props.recipe.duration)}</span></span>
+		    <div className="data">
+				<div className="time">
+					<span><i className="far fa-clock"> </i> <span className="number">{time(props.recipe.duration)}</span></span>
 					<span style={{fontWeight: "bold", paddingLeft:"1vw"}}>{props.recipe.duration < 59 ? 'minutos' : props.recipe.duration == 60 ? 'hora' : 'horas'}</span>
 				</div>
-				<div class="likes">
-					<i class={(props.likes.indexOf(props.recipe._id) !== -1)? "fas fa-heart":"far fa-heart"}  onClick={autLikes} ></i>
-                    <span class="number">{props.recipe.likes}</span>
+				<div className="likes">
+					<i className={(props.likes.indexOf(props.recipe._id) !== -1)? "fas fa-heart":"far fa-heart"}  onClick={autLikes} ></i>
+                    <span className="number">{props.recipe.likes}</span>
 					<span style={{fontWeight: "bold", paddingLeft:"1vw"}}>likes</span>
 				</div>
 		   </div>
 		</div>
 		<div id="difficulty" key={props.recipe.difficulty}>
-					<img src={require(`../images/${props.recipe.difficulty}.png`)} id="difficultyImg" />
+					<img src={getImage(`${props.recipe.difficulty}.png`)} id="difficultyImg" />
 		</div>
 		<div id="icons">
 			{props.recipe.importantContain.map(allAlergies => {
 				return <div id="allAlergies" key={allAlergies}>
-						  <img src={require(`../images/${allAlergies}.png`)} id="allergie" />
+						  <img src={getImage(`${allAlergies}.png`)} id="allergie" />
 					  </div>
 			})}
 		</div>
