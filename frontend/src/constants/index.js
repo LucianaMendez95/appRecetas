@@ -1,8 +1,4 @@
-export const RUTA_API = (import.meta.env.VITE_RUTA_API || '').replace(/\/$/, '')
-
-if (!RUTA_API) {
-	console.error('Falta VITE_RUTA_API en el .env. Reiniciá Vite después de crearlo/editarlo.')
-}
+export const RUTA_API = import.meta.env.VITE_RUTA_API;
 
 export const TEXTOS = [
 	{

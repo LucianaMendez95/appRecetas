@@ -84,6 +84,7 @@ const Login = (props) => {
 					text="signin_with"
 					/>
 					</div>
+					<p><NavLink to="/signup">¿No tenés cuenta? Registrate</NavLink></p>
 					<p><NavLink to="/">Volver al Home</NavLink></p>
 				</div>
 			</div>
